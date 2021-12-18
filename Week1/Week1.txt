@@ -1,0 +1,237 @@
+Machine Learning
+	- Grew out of work in AI
+	- New capability for computers
+Example:
+	- Database Mining
+		Large datasets from growth of automation/web.
+		E.g., Web click data, medical records, biology, engineering
+	-applications can't program by hand
+		E.g., Autonomous helicopter, handwriting recognition, most of 
+		Natural Language Processing(NLP), Computer Vision.
+	-Self-customizing programs
+		E.g., Amazon, Netflix product recommendation
+	-Understanding human learning (brain, real AI)
+
+Machine learning definition:
+	the field of study that gives computers the ability to learn 
+	without being explicitly programmed.(Arthur Samuel)
+
+	A computer program is said to learn from experience E with 
+	respect to some task T and some performance measure P, 
+	if its performance on T, as measured by P, 
+	improves with experience E. (Tom Mitchell)
+	
+	E = the experience of playing many games of checkers
+
+	T = the task of playing checkers.
+
+	P = the probability that the program will win the next game.
+Algorithms:
+	supervised learing
+	unsupervised learning
+	+
+	Reinforcement learning, recommender system.
+	
+Supervised Learning:
+	Common type of ML
+	want to fit straight line vs quadratic?
+	"right answer" given -> data
+	Regression : Predict continuous valued output(price)
+		could get many different value
+	Classification : discrete value output(0 or 1 or more...)
+		just 0 or 1 or more... but has discrete value
+
+Unsupervised Learning:
+	SL -> told explicitly the right answers
+	UL -> has no labeling, not told what the data sets are
+	
+	clustering algorithms
+		automatically classify the data
+		Genes
+
+	application
+		organize computing cluster
+		social network analysis
+			close group
+		market segment
+		astronomical data anaylsis
+			how galaxies are form
+	
+	Cocktail party problem
+		mixture of voice in chaotic environment
+		by using ML algorithms can separate the sound
+		
+	
+	Octave
+		[W,s,v] = svd((repmat(sum(x.*x,1),size(x,1),1).*x)*x');
+	
+Model Algorithm
+	SL -> Regression problem
+		right answer + predict real value
+	
+	notations
+		m : number of training examples
+		x's : input/ features
+		y's : output / target
+		(x,y) : one training example
+		(x^i,y^i) : i-th  training example
+	
+	flow
+		training set -> learning algorihtm -> hypothesis
+	
+	how do we represent h?
+		h_θ(x) = θ_o+θ_ix
+		h(x)...
+
+	linear regression
+		one variable
+	
+Cost Function
+	θ_i's: Parameters
+	
+	How to choose θ_i's?
+		θ_0 = y-intercept
+		θ_1 = slope
+
+	good fit of data
+		idea: get the values and get fit to it
+	
+		minimize θ_0,θ_1
+			1/2m(∑((h_θ(x^(i))-y^(i))^2))
+			(cost function)
+			squared error fuction
+		
+J(θ_0,θ_1)=1/2m(i=1 to m)∑(ŷ_i-y_i)^2 =1/2m((i=1 to m)∑((h_θ(x^(i))-y^(i))^2))
+
+predicted value - actual value
+
+Cost function intuition 1
+	simplified (starting the linear regression on (0,0)
+	h(x) = θ_1x, θ_0 = 0
+
+	1. plot θ_1
+	2. (h_θ(x) - y)^2
+	3. plot J(θ)
+	4. get min J(θ)
+
+Cost function intuition 2
+	contour plots/figures (two parameters) or matlab 3D
+	
+Gradient descent
+	minimizing orbitary j
+	general form: J(θ_0,...,θ_n)		
+	
+	taking baby step to get down to the mininum value of J
+	and take derivative of cost function.(steepest descent)
+	θ_j ​:= θ_j ​− α((​∂​/∂θ_j)J(θ0​,θ1​)) where j =0,1
+	
+	:=
+		assignment 		truth assertion
+		a:=b			a=b
+		putting value to a		asserting whethere they are same value
+	
+	learning rate
+		α : size of each step is determined
+	
+	Correct simulataneous update
+		temp0 := θ_0 ​− α((​∂​/∂θ_j)J(θ0​,θ1​))
+		temp1 := θ_1 ​− α((​∂​/∂θ_j)J(θ0​,θ1​))
+		θ_0 = temp0
+		θ_1 = temp1	
+
+Gradient descent intuition
+	how do they work: learning rate and derivative term	
+	
+	θ_1 := θ_1 ​− α((​d​/dθ_j)J(θ1​))
+
+	derivate term : slope of the tangent line
+		if(positive number)
+		θ_1 := θ_1 ​− α(positive number)
+			then decrease θ_1w
+		if(negative number)
+		θ_1 := θ_1 ​− α(negative number)
+			then increase θ_1
+
+	learning rate:
+		if α is too small, gradinet descent can be slow
+		if α is too large, gradinet descent can overshoot minimun
+		
+		suppose you are at local minimum
+			the derivative is zero
+			θ_1 := θ_1 ​− α(0)
+			θ_1 := θ_1 (unchanged)
+
+		As we approach a local minimum, gradient descent will automatically take smaller steps.
+		So, no need to decrease α
+
+Gradient Descent For Linear Regression
+	key term : derivative term
+	θ_0 := θ_0 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i))
+	θ_1 := θ_1 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i)x_i)	
+	
+	cost function for linear regression alway form bowl shape
+		convex function: has one global mininum
+
+	"Batch" Gradient Descent
+		batch : each step of gradient descent uses all the training examples.
+		susceptible to minima in general
+	
+Matrices and Vectors
+	Matrix : Rectangular array of numbers
+		number of rows x number of columns
+	Vector: n x 1 matrix
+		n=4 : 4-dimensional vector R^4	
+		y_i = i-th element
+		1-indexed vs 0-indexed
+
+Addition and Scalar Multiplication
+	Addition/Subtraction on same dimension of matrices	
+		element-wise.
+		
+	Scalar Multiplication/Division
+		scalar = real number 
+		simply, multiply/divide every elements
+	Combination of Operands
+		X,/ -> +,-
+
+Matrix-vector multiplication
+	A 	✕ 	x 	= 	y 
+	(m x n) 	          (n x 1)	      m-dimensional vector
+	
+	prediction = Data Matrix * parameters
+
+Matrix - matrix multiplication
+	A 	✕ 	B 	= 	C 	
+	(m x n) 	          (n x o)	          (m x o)
+	
+Matrix multiplication properties
+	not commutative (3 x 5 = 5 x 3)
+		A x B ≠ B x A
+
+	Associative
+		A x (B x C) = (A x B) x C
+
+	Identity matrix (I)
+		I_(n x n)
+		1 in diagnal, 0 in rest
+
+		A x I = I x A = A
+
+
+Inverse and transpose 
+	1 = identity
+	not all numbers have an inverse.
+	A(A^-1) = A^-1 x A = I
+
+	matrix transpose
+		1st row -> 1st column
+		A : m x n -> B : m x n
+
+
+
+
+
+
+
+
+
