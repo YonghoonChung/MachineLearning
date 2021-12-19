@@ -1,0 +1,45 @@
+Learning more about Matlab
+https://www.coursera.org/learn/machine-learning/supplement/Mlf3e/more-octave-matlab-resources
+
+Multiple Features
+	notation:
+		n = number of features
+		x^i = input(features) of i^th training example.
+			looking at the n-th row
+		x^(i)_j = value of feature j in i-th training example
+
+	previously: h_θ(x) = θ_0 + θ_1x
+
+	now : 	 h_θ(x) = θ_0 + θ_1x_1+θ_2x_2+θ_3x_3 + ... + θ_nx_n
+	-> x = (n+1) X 1
+	-> θ = (n+1) X 1
+
+	-> h_θ(x) = θ^Tx : in order to make multiplication
+
+
+Gradient descent for multiple variables
+	hypothesis:
+		h_θ(x) = θ^Tx
+	parameter:
+		θ_0,θ_1,θ_2,...,θ_n
+		θ : (n + 1) -dimensional vector
+	cost function:
+		J(θ) = (1/2m)(i=1 to m)∑((h_θ(x_i)-y_i))^2
+	
+	gradient descent:
+		θ_j := θ_j ​− α((​∂​/∂θ_j)J(θ_0,θ_1,...,θ_n​))
+		-> θ_j := θ_j ​− α((​∂​/∂θ_j)J(θ))
+	
+		previous:
+			θ_0 := θ_0 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i))
+			θ_1 := θ_1 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i)x_i)	
+
+		new algorithms:
+			★θ_j := θ_j ​− α(1/m(i=1 to m)∑(h_θ(x^i)-y^i))x^i_j)★
+
+			θ_0 := θ_0 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i)x^i_0)
+			θ_1 := θ_1 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i)x^i_1)
+			θ_2 := θ_2 ​− α(1/m(i=1 to m)∑(h_θ(x_i)-y_i)x^i_2)	
+			...
+
+		NO BIG DIFFERENCE in PREVIOUS AND NOW
