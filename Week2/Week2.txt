@@ -43,3 +43,121 @@ Gradient descent for multiple variables
 			...
 
 		NO BIG DIFFERENCE in PREVIOUS AND NOW
+
+Gradient Descent in Practice 1 - Feature Scaling
+	We can speed up g.d. by having each of our input values in roughly the same range.
+	θ decends quickly on small range, slowly on large range
+
+	Feature Scaling
+		Idea: Make sure features are on a similar scale.
+
+		if the contour plot is ellipse form, it will take along to time to find global mininum
+		
+		scaling by cumsumer range of values
+		0≤x≤1 or -1≤x≤1 (approximately on this range)
+		
+		θ/(rangeOfθ)
+
+		eg) 
+		-100≤x≤100 -> need feature scale
+		-0.0001 ≤x≤ 0.0001 -> need feature scale
+
+		-3≤x≤3 -> NO NEED feature scale
+		-0.333≤x≤0.333-> NO NEED feature scale
+
+	Mean normalization
+		replace x with x - μ to make features have approxiamately zero mean
+		(except x_0 = 1)
+		μ is usualy range/2
+		x = (x - μ)/s
+ 		μ : avg value of x_1 of training set
+		s : range (max - min) or standard deviation
+
+Gradient Descent in Practice 2 - Learning rate (α)
+	Debugging  : whether the algorithm is working correctly
+	how to choose α
+
+	J(θ) should decrease after every iteration.
+
+	automatic convergence test:	(not really reliable)
+		declare convergence if J(θ) decreases by less than 10^-3 in on iteration
+
+	if J(θ) is increasing, g.d. not working
+	
+	if α is small enough, J(θ) should decrease on every iteration
+
+	∴ α too big -> J(θ)(cost function) is increasing, may not converge
+	   α too small -> J(θ) is decreasing slowly, slow convergence
+
+	choose α try ->... ,  0.001, 0.01, 0.1, 1 ,...
+
+Features and Polynomial Regression
+	combination
+		can combine multiple feature into one
+		ex) area = depth * length
+	
+	polynomial regression
+		change the behavoiur of curve -> quadratic, cubic, square root
+		-> ! choose feactures and consider feature scaling
+
+	how to fit polynomial : quadratic/ cubic to data
+	
+	have choice to use feature -> need to decide
+
+Normal Equation
+	linear equation -> better way to find optinum value
+	
+	to find local minima -> J'(θ) = ... = 0
+	θ : (n+1) - dimension
+	θ = (X^T * X)^-1 * X^T * y
+		X : m x (n+1)
+		y : m - dimensional vector
+	(no need of feature scaling with normal equation)
+	
+	Gradient Descent vs Normal Equation
+		GD : need to choose α, needs many iterations
+			works well when n is large
+			O(kn^2)
+
+		NE : no need to choose α, don't need to iterate.
+			need to compute (X^T * X)^-1
+			O(n^3) very slow... 
+			slow if n is very large
+				n > 10,000
+
+Normal Equation Noninvertilbility (advance concept)
+	if (X^T * X) is non-invertible (singular/degenerate)
+		-> pinv(X'*X)*X'*y
+	
+	octave has two inverting functions:
+		* pinv -> sudo
+			get θ, even if it is non-invertible
+		* inv
+
+	Redundant features(linearly dependent)
+		-> delete one of redundant features
+	Too many features(eg, m≤n)
+		-> delete some features or use regularization
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
