@@ -1,4 +1,4 @@
-Learning more about Matlab
+오후 8:01 2021-12-26Learning more about Matlab
 https://www.coursera.org/learn/machine-learning/supplement/Mlf3e/more-octave-matlab-resources
 
 Multiple Features
@@ -272,5 +272,45 @@ Control Statements: for,while, if statement
 			go to the directory and use
 			cd 'xxx'
 		addpath('directory')
+
+Vectorization
+	using library
+		1. faster operation
+		2. less code
+	
+	 h_θ(x) = (j=1 to n)∑(θ_j *x_j) = θ^Tx
+	
+	unvectorization implement:
+		prediction = 0.0;
+		for j = 1:n+1, -> matlab starts from 1
+			prediction = prediction + theta(j)*x(j)
+		end;
+		
+		double prediction = 0.0;
+		for(int j = 0; j<= n; j++)
+			prediction += theta[j] * x[j]
+	Vectorized implement:
+		predicition = theta' * x;
+		
+		double prediction = theta.transpose() * x;
+
+	Gradient descent
+		vectorized implement
+		θ := θ - αδ ( (n+1) := (n+1) - (n+1)(n)
+			where δ = (1/m)(j=1 to n)∑(h_θ(x)^i - y^i)x^(i)
+
+				
+
+
+
+
+
+
+
+
+
+
+
+
 
 
