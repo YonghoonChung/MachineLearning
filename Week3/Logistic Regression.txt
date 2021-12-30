@@ -73,3 +73,56 @@ Cost Function
 
 	Cost((h_θx , y)) =	-log(h_θx) 	if y =1
 			-log(1-h_θx) 	if y = 0
+
+Simplified cost function and gradient descent
+	simpler cost function
+	Cost((h_θx , y)) = -y* log(h_θ(x)) -(1-y)* log(1-h_θ(x))
+		IF y=1∶ Cost(h_θ (x),y)= -log⁡(h_θ (x))
+		IF y=0∶ Cost(h_θ (x),y)= -log(1- h_θ (x))
+
+	J(θ)	= 1/m ∑_(i=1)^mCost(h_θ (x),y) 
+	     	=-1/m[∑_(i=1)^m〖y^i log(h_θ (x^i ))+(1-y^i  )log(1- h_θ (x^i )) 〗]
+
+	Algorithm looks identtical to linear regresion but not equal
+
+Advanced Optimization
+	with J(θ) and J'(θ)
+	able to have Optimization algoriths:
+	---------------------
+	1. Gradient descent
+	---------------------(for experts)
+	2. Conjugate gradient
+	3. BFGS
+	4. L-BFGS
+	
+	advantage of 2,3θ,4:
+		No need to manually pick learning rate
+		Often faster than gradient descent
+	disadvantage of 2,3,4:
+		more complex
+	
+	computing to get theta
+		function [jVal, gradient] = costFunction(theta)
+  			jVal = [...code to compute J(theta)...];
+  			gradient = [...code to compute derivative of J(theta)...];
+		end
+
+	Using fminunc()
+		options = optimset('GradObj', 'on', 'MaxIter', 100);
+		initialTheta = zeros(2,1);	
+			[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options);
+
+Multiclass Classification : one vs all (y={0,1,...n})
+	Email foldering/tagging : Work, friends, family, hobby
+	Medical diagram : Not ill, cold, flu
+	Weather: sunny, cloudy, rain, snow
+
+	with 3 different class
+	-> get fake datas and graph that contains one and rest
+
+	h_θ^(i) (x) = P(y=i|x;θ) (i=1,2,3)
+
+	One-vs-all
+		Train a LR classifier h_θ^(i) (x) for each class i to predict the probability that y =i
+		On a new input x, to make a predicion, pick the class i that maximizes
+			max_(i) h_θ^(i) (x)
