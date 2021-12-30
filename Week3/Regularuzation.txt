@@ -1,0 +1,39 @@
+The Problem of Overfitting
+	cause Linear R and Logist R work poorly
+	what is overfitting?
+		
+	poorly fitting -> underfitting, high bias (straight lines)
+		when the function is too simple or used too few features
+	just right! -> O
+	perfectly fitting but fail to generalize-> overfit, high variance
+
+	overfitting : if we have too many features, the learned hypothesis may fit the training set very well, but fail to generalize to new examples.
+		generalise : how well a hypothesis applies to new examples
+		-> usually occurs when there is high order of variables
+		
+	Addressing overfitting
+		when there are many features, it is hard to get overfitting data
+		
+		options:
+		1. Reduce number of features
+			Manually select which features to keep
+			Use a model selection algorithm
+		2. Regularization
+			Keep all the features, but reduce magnitude/values of parameters θ_j
+			Regularization works well when we have a lot of slight useful features.
+
+Cost Function
+	make θ_3, θ_4 really small -> eventually make the quadratic function
+
+	Small values for parameters
+		- simpler hypothesis
+		- less prone to overfitting
+	
+	Regularization cost function : 
+		J(θ)=1/2m [(sum)〖1/2 (h_θ x^((i) )- y^((i) ) )^2+λ (sum)θ_j^2 〗]
+	Regularization term : λ (sum)θ_j^2 
+	Regularizaiton parameter : λ
+	
+		if λ is set to an extremely large value 
+			all the θ will be close to zero, h_θ(x) = θ_0 (straight line) 
+			->underfit
