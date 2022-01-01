@@ -25,7 +25,7 @@ The Problem of Overfitting
 Cost Function
 	make θ_3, θ_4 really small -> eventually make the quadratic function
 
-	Small values for parameters
+	Small values for parameters (Reason why using regularization)
 		- simpler hypothesis
 		- less prone to overfitting
 	
@@ -37,3 +37,37 @@ Cost Function
 		if λ is set to an extremely large value 
 			all the θ will be close to zero, h_θ(x) = θ_0 (straight line) 
 			->underfit
+
+Regularized Linear Regression
+	J(θ)=1/2m [(sum)〖1/2 (h_θ x^((i) )- y^((i) ) )^2+λ (sum)θ_j^2 〗]
+	min(J(θ))
+	We can apply to both linear regression and logistic regression.
+	
+	Repeat {
+		θ_0 ≔ θ_0-α (1/m) (sum)〖(h_θ x^((i))-y^((i)) ) x_0^((i)) 〗
+		θ_j ≔ θ_j-α [((1/m) (sum)〖(h_θ x^((i) )-y^((i) ) ) x_θ^((i) ) 〗)+λ/m θ_j ]
+			j ∈{1,2,...,n}   
+	}
+	
+	(λ/m θ_j) performs regularization
+
+	θ_j≔θ_j (1-α (λ/m))-α (1/m) (sum)〖(h_θ x^((i) )-y^((i) ) ) x_θ^((i) ) 〗
+		(1 -α(λ/m)) < 1 eg. 0.99
+	
+	Normal Equation
+		alternate method of the non-iterative normal equation
+		L  is a matrix with 0 at the top left and 1's down the diagonal
+		(n+1) X (n+1) dimension, identity matrix(not including x_0)
+
+		if m < n, then X^TX is non-invertible. but when we add term (λ∙L)  then it becomes invertible.
+		
+Regularized Logistic Regression
+	previous regularized cost function + regularization term.
+
+
+
+
+
+
+
+	
