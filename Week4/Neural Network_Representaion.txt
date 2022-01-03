@@ -1,0 +1,67 @@
+Non-linear Hypothesis
+	why we need another algorithm
+	when there is too many features, the possibility is too large
+
+	computer vision
+		when a computer sees a picture(such as car's handle), reads it as a matrix
+		
+	50 x 50 pixel images -> 2500 pixels
+ 		n = 2500
+		pixel 1 quadratic features(x_i X x_j) :≈ 3 million features
+
+
+	so simple registic regression is not a good way to learn complex non-linear hypothesis when n is too large
+	
+	As the number of our features increase, the number of quadratic or cubic features increase very rapidly and becomes quickly impractical.
+
+Neurons and the Brain
+	origins: Algorithm that try to mimic the brain
+	Was used in 80s and 90s
+	Recent resurgence -> now it is pretty fast
+
+	'one learning algorithm' hypothesis
+		Auditory cortex
+			auditory cortex learns to see in computer ...?
+
+		Somatosensory cortex
+			Somatosensory cortex learns to see in computer
+
+	when you plug in any sense of algorithm, brains learns...
+		seeing with your tongue
+		Human echolocation(sonar)
+		Haptic belt : Direction sense
+		Implanting a 3rd eye
+
+Model Representation 1
+	Neurons 
+	- Dendrite -> input wires
+	- Cell body
+	- Axon -> output wires
+
+	Neuron model: Logistic unit
+		x_0 -> bias unit
+	sigmoid(logistic) activation function(using same logistic function as in classification)
+		g(z)
+		theta parameters are called weights
+		[x_0 x_1 x_2] → [    ] → h_θ(x)
+`		  layer1          layer2     layer3
+
+	it can have many layers
+		first layer -> input layer(x)
+		last layer -> output layer(y)
+		rest of the layers -> Hidden layer
+			a_0^2 , ... , a_n^2 : activation units
+
+	Neural Network
+		a_i^j = 'activation' of unit i in layer j
+			activation: values computed by and as output by a specific
+		Θ^j = matrix of weights controlling function mapping from layer j to layer j+1
+
+		if network has s_j units in layer j, s_(j+1) units in layer j+1, then  Θ^j will be of dimension s_(j+1) x (s_j + 1)
+
+Model Representation 2
+	a_1^2 = g(z_1^2)
+	
+	just like logistic regression, except that rather than using the original features, is using these new features.
+
+	
