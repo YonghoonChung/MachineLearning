@@ -21,11 +21,19 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+%{The matrix X contains the examples in rows. 
+% When you complete the code in predict.m, you will need to add the column of 1's to the matrix. 
+% The matrices Theta1 and Theta2 contain the parameters for each unit in rows. 
+% Specically, the first row of Theta1 corresponds to the first hidden unit in the second layer. 
+% In MATLAB, when you compute , be sure that you index (and if necessary, transpose) X correctly so that you get  as a column vector.
+%}
 
-
-
-
-
+a1 = [ones(size(X,1),1) X];
+z2 = a1* Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(size(a2,1),1) a2];
+a3 = sigmoid(a2 * Theta2');
+[prob,p] = max(a3, [],2);
 
 
 
