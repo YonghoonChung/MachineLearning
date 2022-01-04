@@ -60,8 +60,61 @@ Model Representation 1
 		if network has s_j units in layer j, s_(j+1) units in layer j+1, then  Θ^j will be of dimension s_(j+1) x (s_j + 1)
 
 Model Representation 2
+	vectorized implementation. 
 	a_1^2 = g(z_1^2)
-	
+	z_k^(2) = Θ_(k,0)^1x_0 + Θ_(k,1)^1x_1+ ... + Θ_(k,n)^1x_n
+
+	z^(j) = Θ^(j-1)a^(j-1)
+		Θ^(j-1) : dimension s_(j) x (n + 1)
+		a^(j-1) : vector with (n+1)
+		z^(j) : vector with  s_(j)
+	a^j = g(z^j)
+
+	Adding a bias unit
+		z^(j+1) = Θ^(j) * a^(j)
+
+	Final value
+		h_Θ(x) = a^(j+1) = g(z^(j+1))
 	just like logistic regression, except that rather than using the original features, is using these new features.
+
+Examples and Intuitions 1
+	Non-linear classification example : XOR/XNOR
+		x1, x2 are binary(0 or 1)
+	
+		y = x1 XOR x2
+		     x1 XNOR x2
+		     NOT (x1 XOR x2)
+
+	Simple example : AND
+		x1,x2 ∈ {0,1}
+		y = x1 AND x2
+
+		h_Θ(x) = g(-30 +           20x1 +            20x2)
+			Θ_10^(1)	        Θ_11^(1)        Θ_12^(1) 
+ 		
+		h_Θ(x) ≈ x1 AND x2
+
+	Example : OR function
+		h_Θ(x) = g(-10 + 20x1 + 20x2)
+		h_Θ(x) ≈ x1 OR x2	
+
+Examples and Intuitions 2
+	NOT x1
+		h_Θ(x) = g(10 - 20x1)
+
+	(NOT x1) AND (NOT x2)
+		h_Θ(x) = g(10 - 20x1 - 20x2)
+
+	x1 XNOR x2
+		it has a hidden layer
+
+Multiclass Classification
+	multiple output units : One-vs-all
+	
+	classify data into multiple classes, hypothesis function returns a vector of value.
+	ex) h_Θ(x) = [0;0;1;0] -> third one down or h_Θ(x)_3 which represents the motorcycle.
+
+
+
 
 	
