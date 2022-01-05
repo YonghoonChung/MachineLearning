@@ -1,0 +1,31 @@
+Cost Function
+	Neural network classification
+		L = total no. of layers in network
+		s_i = no. of units( not counting bias unit) in layer l
+
+		Binary classification
+			y = 0 or 1
+			
+			1 output unit
+				h_Θ(x) ∈ R
+				S_L = 1 (no. output unit) ⇒ K = 1
+		
+		Multi-class classification (K classes)
+			y ∈ R^K	
+
+			K output units
+				h_Θ(x) ∈ R^K
+				S_L = K (no. output unit) ⇒ K ≥ 3
+
+	Cost function
+		logistic regression:
+J(θ)=-1/m[∑_(i=1)^m〖y^i log(h_θ (x^i ))+(1-y^i  )log(1- h_θ (x^i )) 〗] + (λ/2m)*  ∑(j=1)^n[θ_j^2 }
+		
+		Neural netwrok:
+		h_Θ(x) ∈ R^K 
+		(h_Θ(x))_i = i-th output
+J(θ)=-1/m[∑_(i=1)^m ∑_(k=1)^k〖y_k^i log((h_θ (x^i ))_k)+(1-y_k^i  )log(1- (h_θ (x^i ))_k) 〗] + (λ/2m)*  ∑(l=1)^(L-1)  ∑(i=1)^s_l ∑(j=1)^s_l+1[Θ_(j,i)^l)^2 }
+		
+		Added a few nested summaitons to account for multiple output nodes
+		first part : added nested summation for loops through the number of output nodes.
+		regularization part : account for multile theta matrices and excluding bias unit
