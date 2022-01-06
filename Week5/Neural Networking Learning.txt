@@ -24,8 +24,112 @@ J(θ)=-1/m[∑_(i=1)^m〖y^i log(h_θ (x^i ))+(1-y^i  )log(1- h_θ (x^i )) 〗] 
 		Neural netwrok:
 		h_Θ(x) ∈ R^K 
 		(h_Θ(x))_i = i-th output
-J(θ)=-1/m[∑_(i=1)^m ∑_(k=1)^k〖y_k^i log((h_θ (x^i ))_k)+(1-y_k^i  )log(1- (h_θ (x^i ))_k) 〗] + (λ/2m)*  ∑(l=1)^(L-1)  ∑(i=1)^s_l ∑(j=1)^s_l+1[Θ_(j,i)^l)^2 }
+J(Θ)=-1/m[∑_(i=1)^m ∑_(k=1)^k〖y_k^i log((h_θ (x^i ))_k)+(1-y_k^i  )log(1- (h_θ (x^i ))_k) 〗] + (λ/2m)*  ∑(l=1)^(L-1)  ∑(i=1)^s_l ∑(j=1)^s_l+1[Θ_(j,i)^l)^2 }
 		
 		Added a few nested summaitons to account for multiple output nodes
 		first part : added nested summation for loops through the number of output nodes.
 		regularization part : account for multile theta matrices and excluding bias unit
+
+Backpropagation Algorithm
+	J(Θ) and calculating partial derivative of J(Θ)
+ 	Backpropagatin is neural-network terminology for minimizing our cost function
+
+	Gradient computation
+		Forward propagation:
+		a^(1) = x
+		z^(2) = Θ^(1) a^(1)
+		a^(2) = g(z^(2)) (add bias unit)
+		z^(3) = Θ^(2) a^(2)
+		a^(3) = g(z^(3)) (add bias unit)
+		z^(4) = Θ^(3) a^(3)
+		a^(4) = h_Θ(x) =g(z^(4))
+
+		Backpropagation algorithm:
+		δ_j^(l) = "error" of node j in layer l.
+		a_j^(l) = activation of j unit in layer l ≈ (h_Θ(x))_j
+		
+		L = 4
+		δ_j^(4) = a_j^(l) - y_j
+	=	δ^(4) = a^(l) - y
+		δ^(3) = ((Θ^(3))^T*δ^(4) .*g'(z^(3))             g'(z^(3)) = a^(3) .* (1-a^(3))
+		δ^(2) = ((Θ^(2))^T*δ^(3) .*g'(z^(2))             g'(z^(2)) = a^(2) .* (1-a^(2))
+		no δ^(1)
+
+		δ^(l) = ((Θ^(l))^T*δ^(l+1) .*a^(l) .* (1-a^(l))
+
+		partial derivative of J(Θ) = a_j^(l)*δ_i^(l+1) (ignore λ; if λ = 0)
+		
+		algorithm with training set {(x1,y1),...,(xm,ym)}
+		set △_ij^(l) = 0 (used to compute partial derivative of J(Θ))
+		for i = 1 to m
+			set a^(1) = x^(i)
+			Perform forward propagation to compute a^(l) for l = 2,3,...,L
+			Using y^(i), compute δ^(L) = a^(L) - y(i)
+			Compute δ^(L-1),δ^(L-2),...,δ^(2)  		
+			△_ij^(l) := △_ij^(l) + a_j^(l)δ_i^(l+1); (△^(l) := △^(l) +δ^(l+1)(a^(l))^T)
+		D_ij^(l) := (1/m)△_ij^(l) + λΘ_ij^(l) if j ≠ 0 
+		D_ij^(l) := (1/m)△_ij^(l)                if j = 0 
+
+			 partial derivative of J(Θ) = D_ij^(l)
+
+		FP uses x(1) to x(n), BP uses y(1) to y(n)
+		FP using x(1) followed by BP using y(1). Then FP using x(2) followed by BP using y(2).
+
+Backpropagation Intuition
+	single example and 1 output unit with regularization of 0
+		cost(i) = y^(i)log(h_Θ(x^(i)) + (1 - y^(i))log(1-h_Θ(x^(i))
+		cost(i) ≈ (h_Θ(x^(i) - y^(i))^2
+
+	δ_j^(l) = "error" of cost for a_j^(l) (unit j in layer l).
+
+	Forward Propagation
+		z_1^(3) = Θ_10^(2) * 1 + Θ_11^(2) * a_1^(2) + Θ_12^(2) * a_2^(2)
+	Backward Propagation
+		δ^(4) = a^(l) - y
+		δ_2^(2) = Θ_12^(2)*δ_1^(3)+Θ_22^(2)*δ_2^(3)
+		
+Implementation Note:Unrolling Parameters
+	thetaVec = [Theta1(:);Theta2(:);Theta3(:)];
+	DVec = [D1(:);D1(:);D1(:)];
+
+	Theta1 = reshape(thetaVec(1:110),10,11);
+	Theta2 = reshape(thetaVec(111:220),10,11);
+	Theta3 = reshape(thetaVec(221:231),1,11);
+	
+	* have initial parameters
+	* unroll to get initialTheta to pass to fminunc
+	* From thetavec, get three theta
+	* Use forward prop/back prop to compute D(1),D(2),D(3) and J(Θ)
+	* unroll D(1),D(2),D(3) to get gradientVec.
+
+Gradient Checking
+	verifying the code that I use
+
+	derivation of J(Θ) ≈ (J(θ+ɛ) - J(θ-ɛ)) / 2ɛ    ɛ = 10E-4
+	derivation of J(Θ)_j ≈ (J(θ_1,...,θ_J+ɛ,...,θ_n) - J(θ_1,...,θ_J-ɛ,...,θ_n)) / 2ɛ 
+
+	epsilon = 1e-4;
+	for i = 1:n,
+	  thetaPlus = theta;
+	  thetaPlus(i) += epsilon;
+	  thetaMinus = theta;
+	  thetaMinus(i) -= epsilon;
+	  gradApprox(i) = (J(thetaPlus) - J(thetaMinus))/(2*epsilon)
+	end;
+
+	gradApprox ≈ DVec
+		      (partial derivative from backprop)
+	Make sure you disable gradient checking code b/c it will be too slow
+	
+Random Initialization
+	Zeroing all the value does not work in neural network
+
+	After each update, parameters corresponding to inputs going into each of two hidden units are identical
+		a_1^(2) = a_2^(2)
+	
+	Random initialization: Symmetry breaking
+		initialize each Θ_ij^(l) to a random value in [-ɛ,ɛ]
+
+
+
+
