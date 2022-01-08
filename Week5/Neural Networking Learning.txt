@@ -131,5 +131,35 @@ Random Initialization
 		initialize each Θ_ij^(l) to a random value in [-ɛ,ɛ]
 
 
+Putting It Together
+	pick a network architecture(connectivity patteren between neurons)
+	
+	No. of input units : Dimension of features x^(i)
+	No. of output units : Number of classes
+ 	Reasonable default: 1 hidden layer, or if > 1 hidden layer, have some no. of hidden units in every layer
+
+	Training a neural network
+	1. Randomly initialize weights
+	2. Implement foward propagetion to get h_Θ(x^(i)) for any x^(i)
+	3. Implement code to compute cost function J(Θ)
+	4. Implement backprop to compute partial derivatives of J(Θ)
+
+	for i = 1:m
+		perform forward propagation and backpropagation using example (x^(i),y^(i))
+		(Get activations a^(l) and delta terms δ^(l) for l = 1,2,...L)
+	5. Use gradient checking to compare partial derivative of J(Θ) compute using backprop vs using numerical estimate of gradient of J(Θ)
+		then disable gradient checking code
+	6. Use gradient descent or advanced optimizaiton method with backprop to try to minimize J(Θ) as a function of parameters Θ
+
+Autonomous Driving
+
+
+
+
+
+
+
+
+
 
 

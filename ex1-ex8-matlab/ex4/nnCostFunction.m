@@ -62,23 +62,68 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%%%%%%%% part 1 %%%%%%%%%%%
+% Implementing feedforward propagation (1.3)
+X = [ones(m,1) X];
+z2 = Theta1*X';
+a2 = sigmoid(z2);
+a2 = [ones(m,1) a2'];
+z3 = Theta2*a2';
+a3 = sigmoid(z3);
+
+yVec = zeros(num_labels,m);
+for i = 1:m
+    yVec(y(i),i)=1;
+end 
+
+J = (1/m)*sum(sum((-yVec.*log(a3))-((1-yVec).*log(1-a3))));
+
+% regularization (1.4)
+
+reg_term = (sum(sum(Theta1(:, 2:end).^2))+ sum(sum(Theta2(:, 2:end).^2)));
+reg_term = reg_term*(lambda/(2*m));
+J = J + reg_term;
+
+%%%%%%%%% part 2 %%%%%%%%%%%
+% step 1
+for t = 1:m
+    % layer 1
+    a1 = X(t,:)'; % X has bias unit -> (1 X 401)
+
+    % layer 2
+    z2 = Theta1 * a1; % (25 X 401) * (401 X 1)
+    a2 = sigmoid(z2); % (25 X 1)
+
+    % layer 3
+    a2 = [1 ; a2];
+    z3= Theta2 * a2;
+    a3 = sigmoid(z3);
+
+    % step 2
+    delta_3 = a3 - yVec(:,t);
+    
+    z2 = [1;z2];
+    % step 3
+    delta_2 = (Theta2'*delta_3).* sigmoidGradient(z2);
+
+    % step 4
+    delta_2 = delta_2(2:end);
+
+    Theta1_grad = Theta1_grad + delta_2 * a1';
+    Theta2_grad = Theta2_grad + delta_3 * a2';
+    
+end
+% step 5
+Theta1_grad = (1/m)*Theta1_grad;
+Theta2_grad = (1/m)*Theta2_grad;
 
 
+%%%%%%%% part 3 %%%%%%%
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad(:,1) = Theta1_grad(:,1);
+Theta2_grad(:,1) = Theta2_grad(:,1);
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda/m)*Theta1(:,2:end));
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda/m)*Theta2(:,2:end));
 
 % -------------------------------------------------------------
 
