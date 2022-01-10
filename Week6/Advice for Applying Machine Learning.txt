@@ -1,0 +1,48 @@
+Deciding What to Try Next
+    Debugging a learning algorithm:
+        when your hypothesis makes large errors:
+        - Get more training examples
+             but not reaaly help in many cases
+        - Try smaller sets of features
+        - Try getting additional features
+        - Try adding polynomial features
+        - Try decreasing λ
+        - Try increasing λ
+
+        please don't waster time!
+
+    Machine learning diagnostic:
+        diagnostic - test to get insight what is/isn't working
+                    and get guidance as to how best to improve its performance
+        diagnostic can take time to implement but doing so can be a very good use of time
+
+Evaluating a Hypothesis
+    how to tell whether hypothesis is overfitting?
+        plot them
+        large number of features can lead overfitting
+
+    technique
+        split the data sets
+            1st set = Training set (70%)
+            2nd set = Test set (30%)
+                m_test = no. of the exaple (x_test^(i), y_test^(i))
+            Remember to randonly shuffle the datasets
+
+    Training/testing procedure for linear regression
+        leran parameter θ from training data (minimizing training error J(θ) which is 70%)
+        Compute test set error
+            J_test(θ) = (1/2m_test) * sum(i=1 to m_test)(h_θ(x_test^(i))-y_test^(i))^2
+        
+    Training/testing procedure for logistic regression
+        leran parameter θ from training data (minimizing training error J(θ) which is 70%)
+        Compute test set error
+            J_test(θ) = -(1/m_test) * sum(i=1 to m_test)(y_test^(i)log*h_θ(x_test^(i))+(1-y_test^(i))log*h_θ(x_test^(i)))
+            Misclassification error(0/1 Misclassification error):
+                err(h_θ^(x),y) = {
+                    1 if h_θ(x) ≥ 0.5, y=0
+                      or if h_θ(x) < 0.5, y=1,
+                      
+                    0 otherwise
+                }
+
+                Test error = (1/m_test)*sum(i=1 to m_test)(err(h_θ)(x_test^(i),y_test^(i)))
