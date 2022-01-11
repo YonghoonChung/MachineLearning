@@ -41,8 +41,147 @@ Evaluating a Hypothesis
                 err(h_θ^(x),y) = {
                     1 if h_θ(x) ≥ 0.5, y=0
                       or if h_θ(x) < 0.5, y=1,
-                      
+
                     0 otherwise
                 }
 
                 Test error = (1/m_test)*sum(i=1 to m_test)(err(h_θ)(x_test^(i),y_test^(i)))
+
+Model Selection and Train/Validation/Test Sets
+    the error of the parameters as measured on that data is likely to be lower than the actual generalization error.
+
+    model Selection
+        d = degree of polynomial
+        h_θ(x) = θ_0 + θ_1x                     -> θ^(1) -> J_test(θ^(1))
+        h_θ(x) = θ_0 + θ_1x + θ_2x^2            -> θ^(2) -> J_test(θ^(2))
+        h_θ(x) = θ_0 + θ_1x + θ_3x^3            -> θ^(3) -> J_test(θ^(3))
+            ...
+        h_θ(x) = θ_0 + θ_1x + ... ++ θ_10x^10   -> θ^(10) -> J_test(θ^(10))
+
+        choose  θ_0 + ... θ_5x^5 ->J_test(θ^(5))
+            problem : J_test(θ^(5)) is likely to be an optimisitic estimate of generalization error
+
+        not predicted to for the ...
+
+    Evaluating hypothesis
+        training set (60%)
+        cross Validation (cv) (20%)
+        test set (20%)
+
+    errors
+        training error:
+            J_train(θ) = (1/2m) * sum(i=1 to m)(h_θ(x^(i))-y^(i))^2
+            
+        cross Validation error
+            J_cv(θ) = (1/2m_cv) * sum(i=1 to m_cv)(h_θ(x_cv^(i))-y_cv^(i))^2
+        
+        Test error
+            J_test(θ) = (1/2m_test) * sum(i=1 to m_test)(h_θ(x_test^(i))-y_test^(i))^2
+
+Diagnosing Bias vs. Variance
+    either underfitting(high bias) or overfitting(high Variance)
+
+    training error will tend to decrease as we increase the degree d of the polynomial
+    cross validation error will tend to decrease as we increase d up to a point
+        and the nit will increase as d is increased, forming a convex curve
+
+    Bias(underfit):
+        J_train(θ) will be high
+        J_cv(θ) ≈ J_train(θ)
+
+    Variance(overfit):
+        J_train(θ) will be low
+        J_cv(θ) >> J_train(θ)
+
+Regularization and Bias/Variance
+    Linear regression with Regularization 
+        large λ
+            High bias(underfit)
+            λ = 10000 θ_1 ≈0, θ_2 ≈ 0,... h_(θ)(x) ≈ θ_0
+        small λ
+            High variance (overfit)
+            λ = 0
+        Intermediate λ
+            just right
+
+    choosing the regularization parameter λ
+        J_train(θ) = (1/2m) * sum(i=1 to m)(h_θ(x^(i))-y^(i))^2
+        J_cv(θ) = (1/2m_cv) * sum(i=1 to m_cv)(h_θ(x_cv^(i))-y_cv^(i))^2
+        J_test(θ) = (1/2m_test) * sum(i=1 to m_test)(h_θ(x_test^(i))-y_test^(i))^2
+
+        Try λ = 0 
+        Try λ = 0.01
+        Try λ = 0.02
+        Try λ = 0.04
+        Try λ = 0.08
+        ...
+        Try λ = 10.24
+    
+    Steps
+        1. Create a list of lambdas 
+            (i.e. λ∈{0,0.01,0.02,0.04,0.08,0.16,0.32,0.64,1.28,2.56,5.12,10.24});
+        2. Create a set of models with different degrees or any other variants.
+        3. Iterate through the λs and for each λ go through all the models to learn some Θ.
+        4. Compute the cross validation error using the learned Θ (computed with λ) on the J_CV(Θ) without regularization or λ = 0.
+        5. Select the best combo that produces the lowest error on the cross validation set.
+        6. Using the best combo Θ and λ, apply it on J_test(Θ) to see if it has a good generalization of the problem.
+
+Learning Curves
+    Just fit:
+        Training hypothesis:
+            when m is small ->easy to fit the data 
+            when m is large ->ard to fit all the data 
+
+            Error increases as training set size increases
+        Cross validation hypothesis:
+            tend to decrease as training set size increases
+
+    High bias:
+        Training hypothesis:
+            when m is small ->easy to fit the data 
+            when m is large ->ard to fit all the data 
+
+            Error increases as training set size increases
+        Cross validation hypothesis:
+            tend to decrease as training set size increases
+
+        relatively high error than 'just fit'
+        NO gap between J_train(θ) and J_cv(θ)
+
+        if a learning algorithm is suffering from high bias, 
+            getting more training data will not help much
+
+    High variance:
+        Training hypothesis:
+            when m is small ->easy to fit the data 
+            when m is large ->ard to fit all the data 
+
+            Error increases as training set size increases
+        Cross validation hypothesis:
+            tend to decrease as training set size increases
+
+        Huge gap between J_train(θ) and J_cv(θ)
+
+        if a learning algorithm is suffering from high variance, 
+            getting more training data is likely to help
+
+Deciding What to Do Next (Revisited)
+    - Get more training examples
+        -> fixes high variance
+    - Try smaller sets of features (carefully select small features)
+        -> fixes high variance
+    - Try getting additional features
+        -> fixes high bias
+    - Try adding polynomial features
+        -> fixes high bias
+    - Try decreasing λ
+        -> fixes high bias
+    - Try increasing λ
+        -> fixes high variance
+
+    Neural Networks and overfitting
+        1. small neural network
+            (more prone to underfitting)
+        2. large neural network
+            (more prone to overfitting)
+        3. use regularization to address overfitting
