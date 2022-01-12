@@ -1,0 +1,108 @@
+Building a Spam Classifier
+    Prioritizing What to Work On: Spam Classification example
+    Spam(1)/ Non-spam(0)
+
+    Supervised learning
+    x = features of email
+    y = spam(1) or not spam(0)
+    features x : choose 100 words indicative of spam/ not spam
+        eg. deal, buy, discount, andrew, now
+
+    x_j = {
+        1 if word j appears in email
+        0 otherwise
+    }
+
+    In practice, take most frequently occuring n words(10,000 to 50,000) in training set, rather than manually pick 100 words
+
+    How to spend your time to make it have low error?
+        Collect lots of data
+            E.g. "honeypot" project -> fake email with spams
+        Develop sophisticated features based on email routing information (from email header).
+        Develop sophisticated features for message body.
+            eg. should 'discount' and 'discounts' be treateas the same word? 
+        Develop sophisticated algorithm to detect misspellings
+
+    Error Analysis
+    Recommended approach
+        start with a simple algorithm (1 day)
+            so really sophisticated
+        plot learning curves(for high bias, high variance) to decide if more data, more feautures
+            avoid premature optimization
+        Error analysis : manually examine example that algorithm made errors on.
+            See if you spot any systematic trend
+        
+        Algorithm has high error
+            manually examine:
+                what type of email it is
+                    Pharma, replica, steal passwords
+                what cues (features) you think would have helped the algorithm classify them correctly.
+                    Deliberate misspellings
+                    Unusual email routing
+                    Unusual (spamming) punctuation
+    
+    numerical evaluation
+        discount/discounts/discounted/discounting be treated as the same word?
+        Can use stemming the software
+            universe/university as same word?
+        Error analysis may not be helpful for deciding if this is likely to improve performance
+        Need numerical evaluation of algorithm's performance with and without stemming.
+            distinguis upper vs lower case (Mom, mom)
+
+        Using numerical evaluation can compare which algorithm worked well
+
+Handling Skewed Data
+    Error Metrics for Skewed Classes
+     skewed classes 
+
+     Precision/Recall
+        y = 1 in presence of rare class that we want to detect
+        
+        precision 
+        (Of all patients where we predicted y=1, what fraction actually has cancer?)
+            True prositive/ no. predicted positive = True pos/ True pos + false pos
+            
+        Recall
+        (Of all patients that actually have cancer, what fraction did we correctly detect?)
+            True pos/ no. actually pos = True pos/ true pos + false neg 
+            y=0, recall = 0
+
+    Trading Off Precision and Recall
+        want to predict y=1 only if very confident
+            h_θ(x) ≥ 0.7
+            h_θ(x) < 0.7
+            higher precision, lower recall
+
+            h_θ(x) ≥ 0.9
+            h_θ(x) < 0.9
+            higher precision, lower recall
+        want to avoid missing too many cases of cancer(avoid false negative)
+            h_θ(x) ≥ 0.3
+            h_θ(x) < 0.3 
+            higher recall, lower precision
+
+        More generally: predict 1 if h_θ(x) ≥ threshold
+
+        choose automatically? (F score)
+            average: (P + R)/2
+                not good all the time (really recall or precision)
+            F_1 score : 2*(PR/(P+R))
+                if one of them is zero, then the score is zero
+                P=0 or R=0 => F score = 0
+                P=1 and R=1 => F score = 1 
+
+Using Large Data Sets
+    Data For Machine Learning
+        classifying between confusable words
+        
+        algorithms
+            perceptron
+            winnow
+            Memory based
+            naive bayes
+
+        More data wins?
+            depends on the algorithm
+        
+        1. can a human experts look at the features x and confidently predict the value of y. 
+        2. can we actually get a large training set, and train the learning algorithm with a lot of parameters in the training set.
