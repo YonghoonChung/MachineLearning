@@ -106,3 +106,11 @@ Using Large Data Sets
         
         1. can a human experts look at the features x and confidently predict the value of y. 
         2. can we actually get a large training set, and train the learning algorithm with a lot of parameters in the training set.
+
+        How much data should we train on?
+
+In certain cases, an "inferior algorithm," if given enough data, can outperform a superior algorithm with less data.
+
+We must choose our features to have enough information. A useful test is: Given input x, would a human expert be able to confidently predict y?
+
+Rationale for large data: if we have a low bias algorithm (many features or hidden units making a very complex function), then the larger the training set we use, the less we will have overfitting (and the more accurate the algorithm will be on the test set).
