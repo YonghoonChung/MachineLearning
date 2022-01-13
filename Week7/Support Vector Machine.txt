@@ -1,0 +1,113 @@
+Large Margin Classification
+    Optimization Objective
+        Support Vector Machine(SVM)
+            - another type of supervised machine learning
+
+        logistic regression
+            if y=1, then h_θ(x) ≈ 1 and θ^Tx >> 0
+            if y=0, then h_θ(x) ≈ 0 and θ^Tx << 0
+
+            J(θ)=(1/m)*sum(i=1 to m)(-y^(i)log(h_θ(x^(i)))-(1-y(i))log(1-h_θ(x^(i))))
+
+            -log(h_θ(x^(i)) = -log(1/(1+e^(-θ^Tx^(i)))) = z
+
+        hinge loss
+            -log(1/(1+e^(-θ^Tx^(i))))
+                greater than 1
+                for value of x less then 1 -> straight decreasing line
+                cost_1(z)
+             -log(1-1/(1+e^(-θ^Tx^(i))))
+                less than 1
+                for value of x greater then 1 -> straight increasing line
+                cost_0(z)
+
+        SVM hypothesis
+            (min of θ) C*sum(i=1 to m)([y^(i)cost_1(θ^Tx^(i))+(1-y^(i))cost_0(θ^Tx^(i))]) + 1/2 *sum(i=1 to n) θ_j^2
+
+            C = 1/λ
+        Hypothesis:
+            h_θ(x) = {
+                1 if θ^Tx ≥ 0
+                0 otherwise
+            }
+
+    Large Margin Intuition
+        SVM = Large Margin classifier
+
+        If y = 1, θ^Tx ≥ 1 (not just ≥ 0)
+        If y = 0, θ^Tx ≤ -1 (not just < 0)
+
+        SVM Decision Boundary
+            C=100,000
+
+            Whenever y^(i) = 1:
+                θ^Tx^(i) ≥ 1
+
+
+            Whenever y^(i) = 0:
+                θ^Tx^(i) ≤ -1
+
+            min C*0 + 1/2*sum(i=1 to n)θ_j^2
+
+            s.t θ^Tx^(i) ≥ 1 if y^(i)=1
+                θ^Tx^(i) ≤ -1 if y^(i)=0
+
+        SVM Decision Boundary: Linearly separable case
+            Large margin classifier
+            margin = distance of the decision boudary to the nearest example.
+
+        Large margin classifier in presence of outlier
+            C very large
+                very sensitive to outlier
+            C not too large
+                not too sensitive to the outlier
+
+    Mathematics Behind Large Margin Classification
+        Vector Inner Product
+            u=[u1;u2] v=[v1;v2]
+            u^Tv = ?
+            ||u|| = length of vector u = sqrt(u1^2+u2^2)
+
+            p = length of projection of v onto u
+            u^Tv = p * ||u|| = u1v1+u2v2
+
+        SVM Decision Boundary
+            min 1/2* sum(j=1 to n)(θ_j^(2)) = 1/2 (θ_1^2+θ_2^2) = 1/2*(sqrt(θ_1^2+θ_2^2))^2
+                = 1/2*||θ||^2
+
+             u^Tv = p*||u||
+
+
+Kernels
+    Kernels 1
+        Kernels allow us to make complex, non-linear classifiers using SVM
+
+        Non-linear Decision Boundary
+            h_θ(x) = {
+                1 if θ0+θ1x1 +... ≥0
+                0 otherwise 
+            } 
+            θ0+θ1f1+θ2f2 + ...
+            f1 = x1, f2 = x2, f3 = x1x2, f4=x1^2, f5=x2^2
+
+        Given x, compute new feature depending on proximity to landmarks l^(1),l^(2),l^(3)
+        f_i=similarity(x,l^(i))=exp(−(∣∣x−l^(i)∣^2)/2σ^2)
+                               =exp(−(sum(j=1 to n)(x_j-l_j^(i)^2))/2σ^2)
+            similarity() = Gaussian Kernel
+
+            if x ≈ l^(1): (if x and the landmark are close)
+                (x_j-l_j^(i)^2) = 0
+                f1 ≈ 1 
+            if x is far from l^(1): (if x and the landmark are far away from each other)
+                (x_j-l_j^(i)^2) = large number
+                f1 ≈ 0
+
+            σ is a parameter of the Gaussian Kernel
+                it can be modified to increase or decrease the drop-off of feature f_i
+
+        Combined values inside Θ, we can choose these landmarks to get the general shape of decision boundary
+
+    Kernels 2
+
+SVMs in Practice
+    Using An SVM
