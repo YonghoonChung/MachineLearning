@@ -108,6 +108,70 @@ Kernels
         Combined values inside Θ, we can choose these landmarks to get the general shape of decision boundary
 
     Kernels 2
+        way to get landmark is to put them in the exact same location
+        -> this give us m landmarks, with one landmark per training example
+
+        f_1=similarity(x,l^(1)),f_2=similarity(x,l^(2)),f_3=similarity(x,l^(3)) ,...
+
+        f_i -> feature vector,f_0=1 to correspond with Θ_0
+
+        Using kernels to generate f(i) is not exclusive to SVMs and may also be applied to logistic regression. 
+            However, because of computational optimizations on SVMs, kernels combined with SVMs is much faster than with other algorithms.
+            so kernels are almost always found combined only with SVMs.
+
+        SVM parameters:
+            C (=1/λ) {
+                Large C : Lower bias, high Variance.
+                Small C : higher bias, low Variance
+            }
+            large σ^2:
+                Feature f_i vary more smoothly
+                Higher bias, lower Variance
+
+            small σ^2:
+                Feature f_i vary less smoothly
+                Lower bias, higher Variance
 
 SVMs in Practice
     Using An SVM
+        Use SVM software package to solve for parameters θ
+
+        Need to specify:
+            Choice of parameter C
+            Choice of kernel (similarity function):
+                eg. no kernel ("liner kerne")
+                    n large, m small
+                Gaussian kernel:
+                    need to choose σ^2
+
+                    f = exp(−(||x1-x2||^2)/2σ^2)
+
+                    x1 = x^(i)
+                    x2 = l^(j)
+
+                    ||x-l||^2 -> v = x - l
+                                ||v||^2 = v1^2+v2^2+v3^2+v4^2+...
+                                        = (x1-l1)^2 + ....
+            Other choice of kernel
+                not all similarity functions similarity(x,l) make valid kernels.
+
+                polynomial kernel
+                    perform worse
+                    k(x,l) = (x^Tl)^2, ... 
+                        (x^T*l + constant)^degree
+                
+                More esoteric:
+                    String kernel, chi-square kernel, histogram kernel, intersection kernel
+
+        Multi-class classification
+        
+        Logisitic regression vs SVMs 
+            n = number of feature, m = no. of training examples
+            if n is large:
+                logistic regression or svm without kernel(linear kernel)
+            if n is small:
+                SVM with Gaussian kernel
+            if n is small, m is large"
+                create/add more features, then use logistic regression or SVM without a kernel krne
+            
+            may take time to learn.
