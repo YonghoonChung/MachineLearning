@@ -1,0 +1,89 @@
+Introduction
+    Clustering
+    training set -> unlabeled
+        {x1,x2,x3,...}
+         don't have the vector y of expected results
+
+    Application
+        market segmentation
+        social network analysis
+        organize computing Clustering
+        astronomical data analysis
+
+K-Means algorithms
+    set centroid and color them by the shorter distance
+
+    Input:
+        K (number of clusters)
+        Training set
+            x^(i) is real number
+        
+        Randomly initialize K cluster centroids, μ_1, μ_2 μ_3
+        Repeat {
+            for i = 1 to m (cluster assignment step)
+                c^(i) := index (from 1 to K) of cluster centriod closest to x^(i)
+
+                min ||x^(i) - μ_k||^2
+            for k = 1 to K (move centriod step)
+                μ_k := average(mean) of points assigned to cluster k
+
+                μ_2 = [x1+x5+x6+x10]/4 -> finding average
+        }
+    K-means for non-separated clusters 
+        if the values are setted relatively one big cluster and you need to separate them
+
+Optimization Objective
+    2 purpose
+        1. deeper understading of k-mean
+        2. to help k-means find better costs.
+    
+    μ_c^(i) = cluster centroid of cluster to which example x^(i) has been assigned
+        x^(i)->5, c^(i) = 5, μ_c^(i) = μ_5
+    Optimization Objective:
+        J(c^(1),...,c^(m),μ1,...,μK) = 1/m*sum(i=1 to m)(||x^(i)-μ_(c^(i)||^2)
+        minizie all out parameters using cost function
+        also called distortion of the training example
+
+    K-means algorithms
+        Randomly initialize K cluster centroids, μ_1, μ_2 μ_3
+        Repeat {
+            for i = 1 to m (cluster assignment step)
+                c^(i) := index (from 1 to K) of cluster centriod closest to x^(i)
+
+                min J(...) with c^1,c^2,...,c^n
+
+                    holding μ1,...,μk fixed
+            for k = 1 to K (move centriod step)
+                μ_k := average(mean) of points assigned to cluster k
+
+                min J(...) woth μ1,...,μk
+        }
+        not possible for the cost function to sometimes increase. 
+            it should always descend
+
+Random Initialization
+    Should have K <m 
+    Randomly pick K training examples.
+    Set μ1,...μK equal to these examples.
+        this method need to be luck
+    
+    Local optimizations 
+        K-means can get stuck in local optima
+    
+    for i = 1 to 100{
+        Randomly initialze K-means
+        Run k-means. Get c^(1),..,c^(m), μ_1 ,...,μ_k.
+        Compute cost function(distortion)
+            J(...)
+    }
+    Pick clustering that gave lowest cost J(...)
+
+Choosing the Number of Clusters
+    choose numver of clusters by hand
+
+    Elbow method:
+        big change in curve
+        not used often bc it is ambiguous.
+    
+    Downstream purpose
+    chooosing is divided depends how compact you want to use
