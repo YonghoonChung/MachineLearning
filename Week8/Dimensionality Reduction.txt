@@ -1,0 +1,110 @@
+Motivation
+    Data Compression (Reducing the dimension)
+
+        Reduce data from 2D to 1D (vector u^(1))
+
+        Finding direction of the graph and line them in a single dimesion
+            2D    1D
+            --------
+            x1 -> z1
+            x2 -> z2
+            ...
+            xm -> zm
+        
+        Reduce data from 3D to 2D (vector u^(2))
+        
+        Reducing features rather than number of examples
+
+    Data Visualization
+        Not easy to visualize data if there are too many features,
+             set z's to summarize the data
+        ex) 50D to 2D or 3D
+
+Principal Component Analysis (PCA)
+    Principal Component Analysis Problem Formulation
+        Goal of PCA
+            Reduce the average of all distances of every features to the projection line
+
+        Finding a surface onto which to project the data so as to minimize 
+        Smallest projection error.
+
+        Find a direction onto which to project the data so as to minimize projection error
+            2D to 1D : u^(1)
+            nD to kD : u^(k)
+
+        PCA is no linear regression
+            linear regression
+                minimizing squared error -> vertical distances
+
+                taking to x and apply the parameters to predict y
+            PCA
+                minimizing shotest distances
+
+                Not predicting any result
+
+    Principal Component Analysis Algorithm
+        Before we begin PCA, preprocessing is required.
+
+        mean normalization:
+            μ_j = 1/m* sum(i=1 to m)(x_j^(i))
+            Replace each x_j^(i) with x_j - μ__j
+
+            if different features on different scales, scale features to have comparable range of values.
+        
+        covariance matrix:
+            Σ = 1/m* sum(i=1 to m)(x^(i)*(x^(i)^T)
+            eigenvector of matrix Σ:
+                [U,S,V] = svd(Sigma);
+        take the first k columns of the U matrix and compute z
+            z^(i)=U_reduce^T⋅x^(i)
+
+Applying PCA
+    Reconstruction from Compressed Representation
+        unpress back to our original number of feature?
+
+        z -> x
+        X_approx = U_reduce ⋅ z
+    
+    Choosing the Number of Principal Components
+        Choosing k (number of Principal components)
+            average squared projection error :
+                1/m* sum(i=1 to m)(||x^(i)-x_approx^(i)||^2)
+            total variance :
+                1/m* sum(i=1 to m)(||x^(i)||^2)
+            Average squared projection error/ Total variation in the data
+            ≤ 0.01 -> 99% of variance is retained
+            ≤ 0.05 -> 95% of variance is retained
+            ≤ 0.10 -> 90% of variance is retained
+
+    Advice for Applying PCA
+        Application
+            Compression
+                Reduce memory/disk needed to store data
+                Speed up learning Algorithm
+
+                Choose k by % of variance retain
+            Visualization
+                k = 2 or k = 3
+        
+        Bad use of PCA: To prevent overfitting
+            Use z^(i) instead of x^(i) to reduce the number of features to k < n
+            Thus fewer features, leass like to overfit
+                might work with regularization
+        
+        PCA is sometimes used where it shouldn't be:
+            before implementing PCA, first try run the whole original data
+            Only if that is slow or not getting what I want, then use PCA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
