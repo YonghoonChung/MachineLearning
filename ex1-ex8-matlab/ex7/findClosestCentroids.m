@@ -21,12 +21,26 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% K = 3, idx = 300;
 
+m = size(X,1);
+for i = 1:m
+    distance = zeros(1,K);
 
+    for j = 1:K
+        distance(1,j) = sum((X(i,:)-centroids(j,:)).^2);
+    end
 
+    min = 1000000;
+    for j = 1:K
+        if(distance(1,j)<min)
+            min = distance(1,j);
+            index = j;
+        end
+    end
 
-
-
+    idx(i) = index;
+   
 % =============================================================
 
 end
