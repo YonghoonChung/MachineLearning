@@ -1,0 +1,5 @@
+Predicting Movie Ratings
+
+Collabrorative Filtering
+
+Low Rank Matrix Factorization
