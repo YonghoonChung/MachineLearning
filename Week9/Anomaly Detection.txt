@@ -1,5 +1,44 @@
 Density Estimation
+    Problem Motivation
+        Model -> probability that the example is not anomalous
+        ɛ -> dividing lines so we can say which is anomalous
 
+        Anomaly detection example
+            Oddly ploted compared to other datas
+        Density estimation 
+            Model p(x)
+            p(x_test) < ɛ -> flag anomaly
+            p(x_test) ≥ ɛ -> OK
+        Fraud detection:
+            find x^(i) -> features of user
+            Model p(x)
+            p(x_test) < ɛ -> identify unusual user
+
+        if anomalous dectector is flagging too many examples, then we need to decrease ɛ
+
+    Gaussian Distribution
+        x ~ N(μ,σ^2)
+        mean : μ
+        variance : σ^2
+        SD : σ
+        ~ : "distributed as" 
+        p(x; μ,σ^2) = exp(-(x-μ)^2/2σ^2)/(sqrt(2π)σ)
+
+        μ = 1/m* sum(1 to m) (x^(i))
+        σ^2 = 1/m* sum(1 to m) (x^(i)-μ)^2
+
+    Algorithm
+        p(x) = p(x_1;μ_1,σ_1^2)p(x_2;μ_2,σ_2^2)...p(x_n;μ_n,σ_n^2)       
+        ∏(j = 1 to n) (p(x_j;μ_j,σ_j^2)) 
+        ∏ -> product notation, 1*2*3,...
+
+        choose feature x_1 that which might be indicative of anomalous
+        Fit parameters
+            μ_j = 1/m* sum(1 to m) (x_j^(i))
+            σ_j^2 = 1/m* sum(1 to m) (x_j^(i)-μ_j)^2
+        Give new example x, compute p(x)
+            p(x) = ∏(j = 1 to n) (p(x_j;μ_j,σ_j^2)) 
+                 = ∏(j = 1 to n) (exp(-(x_i-μ_i)^2/2σ_i^2)/(sqrt(2π)σ_i))
 Building an Anomaly Dectection System
 
 Multivariate Gaussian Distribution
