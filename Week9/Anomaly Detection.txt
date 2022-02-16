@@ -14,7 +14,7 @@ Density Estimation
             Model p(x)
             p(x_test) < ɛ -> identify unusual user
 
-        if anomalous dectector is flagging too many examples, then we need to decrease ɛ
+        if anomalous detector is flagging too many examples, then we need to decrease ɛ
 
     Gaussian Distribution
         x ~ N(μ,σ^2)
@@ -40,7 +40,7 @@ Density Estimation
             p(x) = ∏(j = 1 to n) (p(x_j;μ_j,σ_j^2)) 
                  = ∏(j = 1 to n) (exp(-(x_i-μ_i)^2/2σ_i^2)/(sqrt(2π)σ_i))
 
-Building an Anomaly Dectection System
+Building an Anomaly Detection System
     Developing and Evaluating an Anomaly Detection System
         Making decisioin is much easier if we have a way of evaluating our learning algorithm.(y = 0 if normal, y = 1 if anomalous).
 
@@ -54,7 +54,7 @@ Building an Anomaly Dectection System
             precision/recall
             f1 score
         
-    Anomaly Dectection vs. Supervised Learning
+    Anomaly Detection vs. Supervised Learning
         Anomaly detection(use p(x)):
             * very small numver of positive examples (y=1)
             * Large numver of negative example (y=0)
@@ -80,6 +80,34 @@ Building an Anomaly Dectection System
             Our goal is for p(x) to be large for normal examples and small for anomalous examples.
 
             figure out new features that will better distinguish the data.
-            
+
             choose features that might take on unusually large or small values in the event of an anomaly.
-Multivariate Gaussian Distribution
+
+Multivariate Gaussian Distribution(MGD)
+    MGD
+        Instead of modeling p(x_1),p(x_2) separately, we will model p(x) all in one go. 
+        Our parameters will be: μ , Σ
+
+        p(x;μ,Σ)= (1/(2π)^(n/2)∣Σ∣^(1/2)(exp(−1/2(x−μ)^TΣ^-1(x−μ)))
+
+    Anomaly Detection using the Multivariate Gaussian Distribution
+        1. Fit model p(x) by setting μ , Σ
+        2. Given a new example x, compute p(x)
+            Flag an anomaly if p(x) < ɛ  
+
+        The original model for p(x) corresponds to a multivariate Gaussian where the contours of p(x;μ,Σ) are axis-aligned.
+
+        Original model vs Multivariate Gaussian
+            Original model(use more often):
+                p(x_1;μ_1,σ_1^2)p(x_2;μ_2,σ_2^2)...p(x_n;μ_n,σ_n^2)  
+
+                Manually create features to capture anomalies
+                Computationally cheaper
+                OK even if m is small
+            
+            Multivariate Gaussian:
+                p(x;μ,Σ)= (1/(2π)^(n/2)∣Σ∣^(1/2)(exp(−1/2(x−μ)^TΣ^-1(x−μ)))
+
+                Automatically captures correlations between features
+                Computationally more expansive
+                Must have m> n or Σ is non-invertible
