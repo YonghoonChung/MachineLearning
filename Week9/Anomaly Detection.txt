@@ -39,6 +39,47 @@ Density Estimation
         Give new example x, compute p(x)
             p(x) = ∏(j = 1 to n) (p(x_j;μ_j,σ_j^2)) 
                  = ∏(j = 1 to n) (exp(-(x_i-μ_i)^2/2σ_i^2)/(sqrt(2π)σ_i))
-Building an Anomaly Dectection System
 
+Building an Anomaly Dectection System
+    Developing and Evaluating an Anomaly Detection System
+        Making decisioin is much easier if we have a way of evaluating our learning algorithm.(y = 0 if normal, y = 1 if anomalous).
+
+        Fit model p(x) on training set
+        on a CV/test example x, predict
+            y = {
+                1 if p(x) < ɛ (anomaly)
+                0 if p(x) ≥ ɛ (normal)
+            }
+        evalualte metrics
+            precision/recall
+            f1 score
+        
+    Anomaly Dectection vs. Supervised Learning
+        Anomaly detection(use p(x)):
+            * very small numver of positive examples (y=1)
+            * Large numver of negative example (y=0)
+            * Unable to predict future anomalies
+            * We have many different "types" of anomalies and it is hard for any algorithm to learn from positive examples what the anomalies look like; future anomalies may look nothing like any of the anomalous examples we've seen so far.
+            ex) Fraud detection, Manufacturing(e.g air cratf engines), Monitoring machines in a data center
+        Supervised learning:
+            * large number of both positive and negative examples
+            * enough positive examples for the algorithm to get a sense of what new positives examples look like. The future positive examples are likely similar to the ones in the training set.
+            ex) spam emails, weather prediction, canser classification
+    
+    Choosing What Features to Use
+        if the histogram is skewed, use log(x) to get bell shape
+            log(x)
+            log(x+1)
+            log(x+c)
+            x^(1/2)
+            x^(1/3)
+
+        Error analysis procedure 
+            p(x) is comparable for normal and anomal examples
+
+            Our goal is for p(x) to be large for normal examples and small for anomalous examples.
+
+            figure out new features that will better distinguish the data.
+            
+            choose features that might take on unusually large or small values in the event of an anomaly.
 Multivariate Gaussian Distribution
