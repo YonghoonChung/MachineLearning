@@ -1,5 +1,48 @@
 Predicting Movie Ratings
+    Problem Formulation
+        n_u = number of users
+        n_m = number of movies
+        r(i,j) = 1 if user j has rated movie i
+        y^(i,j) = rating given by user j to movie i
+
+    Content Based Recommendations
+        θ^(j) : parameter vector for user j
+        x^(i) : feature vector for movie i
+        (θ^(j))^T(x^(i)) : for user j, movie i , predicting rating
+
+        m^(j) : no. of movies rated by user j
+        To learn θ^(j):
+            min_θ^(j) = (1/2)(sum (i:r(i,j)=1) ((θ^(j))^T)(x^(i))-y^(i,j)^2)+ (λ/2)(sum(k=1 to n))(θ_k^(j))^2
+        To get the parameters for all our users, we do the following:
+            min_(θ^(j),...,θ^(n_u)) = (1/2)(sum (j=1 to n_u(sum (i:r(i,j)=1) ((θ^(j))^T)(x^(i))-y^(i,j)^2))+ (λ/2)(sum(j=1 to n_u)(sum(k=1 to n))(θ_k^(j))^2)
 
 Collabrorative Filtering
+    Collabrorative Filtering
+        very difficult to find features 
+            use feature finders.
+
+        Given x...(and movie ratings) -> can estimate θ ...
+            min_(θ^(j),...,θ^(n_u)) => (1/2)(sum (j=1 to n_u(sum (i:r(i,j)=1) ((θ^(j))^T)(x^(i))-y^(i,j)^2))+ (λ/2)(sum(j=1 to n_u)(sum(k=1 to n))(θ_k^(j))^2)
+        Given θ...                    -> can estimate x ...
+            min_(x^(1),...,x^(n_m)) => (1/2)(sum (i=1 to n_m(sum (i:r(i,j)=1) ((θ^(j))^T)(x^(i))-y^(i,j)^2))+ (λ/2)(sum(i=1 to n_m)(sum(k=1 to n))(x_k^(i))^2)
+
+    Collabrorative Filtering Algorithm
+        minizing x and θ simultaneously:
+        J(x,θ)=(1/2)(sum (i=1 to n_m(sum (i:r(i,j)=1) ((θ^(j))^T)(x^(i))-y^(i,j)^2))+ (λ/2)(sum(j=1 to n_u)(sum(k=1 to n))(θ_k^(j))^2) +(λ/2)(sum(i=1 to n_m)(sum(k=1 to n))(x_k^(i))^2)
+
+        1. Initialize x,θ to small random values
+            why? This serves as a symmetry breaking and ensures the algorithm learns features x that are different from each other
+        2. Minimize J(x,θ) using gradient decent.
+        3. For a user with parameters θ and a movie with (learned) features x, predict a star rating of θ^Tx .
 
 Low Rank Matrix Factorization
+    Vectorization: Low Rank Matrix Factorization
+        matrices X -> (each row containing features of a particular movie)
+        Θ -> (each row containing the weights for those features for a given user)
+        Y = XΘ^T
+
+        Predicting how similar two movies
+            using the distance between their respective feature vectors x
+            ∣∣x^(i)−x^(j)∣∣
+    Implementational Detail: Mean Normalization
+        
