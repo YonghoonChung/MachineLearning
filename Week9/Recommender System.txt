@@ -45,4 +45,7 @@ Low Rank Matrix Factorization
             using the distance between their respective feature vectors x
             ∣∣x^(i)−x^(j)∣∣
     Implementational Detail: Mean Normalization
-        
+        μ_i = mean of previous ratings
+        (θ^(j))^Tx^(i)+μ_i
+
+        Now, for a new user, the initial predicted values will be equal to the μ term instead of simply being initialized to zero, which is more accurate.
