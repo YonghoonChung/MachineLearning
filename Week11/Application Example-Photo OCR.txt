@@ -1,0 +1,63 @@
+Photo OCR
+    Problem Description and Pipeline
+        Photo OCR : Photo Opitcal Character Recognition
+            focuses on how to get computers to read the text to the purest in images
+        1. Detect where the text is located
+        2. Read the text
+
+        Car navigation system
+
+        OCR pipeline
+            0. Image
+            1. Text detection
+            2. Character segmentation
+            3. Character classification/recognition
+        
+    Sliding Windows
+        Pedestrian detection
+            height & width ratio -> rectangle
+
+            step-size / stride -> stepping rectangle to see whether pedestrian is appeared in images
+                small rectangle to larger rectangle
+
+            this technique is called sliding windows
+
+        1D Sliding window for character segmentation
+            detect characters by sliding windows
+                do black/white color -> place characters white
+                check whether character is mid-point of two characters
+
+    Getting Lots of Data and Artificial Data
+        Reliable way -> low bias learning algorithm and train it on a massive training set
+        where to get data?
+            1. create new data
+            2. use the previous dataset
+
+        Synthesizing data by introducing distortion
+        
+        1. Make sure you have a low bias classifier before expending the effort.
+        2. "How much work would it be to get 10x as much data as we currently have?"
+            - Artificial data synthesis
+            - Collect / label it yourself
+            - "Crowd source"
+
+    Ceiling Analysis: What Part of the Pipeline to Work
+        Estimating the errors due to each component
+            checking each steps with accuracy
+                Overall system -> 72%
+                text detection -> 89%
+                ...
+
+        Face recognition
+            Camera image -> Preprocess (remove background) -> Face detection ->(Eyes, Nose, Mouth segmentation) -> Logistic regression -> Label
+
+Conclusion
+    SL
+        Linear reg, Logistic reg, Neural Networks, SVM
+    UL
+        K-means, PCA, Anomaly detection
+    Special application/speical topics
+        Recommender systems, large scale machine learning
+    Advice on building a machine learning system    
+        Bias/variance, regularization; deciding what to work on next: evaulation of learning algorithms, learning curves, error analysis, ceiling analysis
+    
