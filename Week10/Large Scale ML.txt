@@ -1,0 +1,57 @@
+Gradient Descent with Large Datasets
+    Learning With Large Datasets
+        Large datasets -> algorithm has high variance when m is small
+        algorithm with high bias -> more data will not have any benefit
+    
+    Stochastic Gradient Descent
+        Batch gradient descent 
+            Using all the data
+            
+        Stochastic gradient descent
+            more efficient to large datasets
+
+            cost(θ,(x^(i),y^(i))) = 1/2(h_θ(x^(i))-y^(i))^2
+            1. Randomly shuffle datasets
+            2. Repeat {
+                for i = 1 to m {
+                    θ_j := θ_j - α(h_θ(x^(i)-y^(i))⋅x_j^(i))
+                }
+            }
+            only try to fit one training example
+            unlikely to converge at the global minimum
+            slowly/Randomly more close to the mininum
+
+            vectorized implementations over the b examples.
+        
+    Mini-Batch Gradient Descent
+        Use some in-between number of examples b.
+
+        Batch - all m 
+        Stochastic - 1
+        Mini-batch - b
+
+    Stochastic Gradient Descent Convergence
+        With a smaller learning rate, it is possible that you may get a slightly better solution with stochastic gradient descent. 
+            oscillate and jump around the global minimum, and it will make smaller random jumps with a smaller learning rate.
+        increase the number of examples
+            plot's line will become smoother.
+        very small number of examples
+            too noisy and it will be difficult to find the trend.
+
+        One strategy for trying to actually converge at the global minimum is to slowly decrease α over time.
+            α = const1/(iterationNumber + const2)
+
+Advanced Topics
+    Online Learning
+        With a continuous stream of users to a website, we can run an endless loop that gets (x,y)
+
+        You can update θ for each individual (x,y) pair as you collect them. This way, you can adapt to new pools of users, since you are continuously updating theta.
+    
+    Map Reduce and Data Parallelism
+        dispatch the cost function for a subset of the data to many different machines so that we can train our algorithm in parallel.
+        You can split your training set into z subsets corresponding to the number of machines you have.
+
+        Your learning algorithm is MapReduceable if it can be expressed as computing sums of functions over the training set.
+            Linear regression and logistic regression are easily parallelizable.
+
+        For neural networks, you can compute forward propagation and back propagation on subsets of your data on many machines. Those machines can report their derivatives back to a 'master' server that will combine them.
